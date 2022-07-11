@@ -24,44 +24,64 @@ struct LoginView: View {
             Spacer()
             
             VStack() {
-                Text("Welcome to TLV Digitel")
-                    .padding(.top, 20)
-                    .font(.title)
-                    .foregroundColor(.white)
+                
+                //  logo
+                Image("logo-6")
+                    .resizable()
+                    .frame(width: 166.14, height: 26)
+                    .padding(.top, 50)
+                
+//                Text("Welcome to TLV Digitel")
+//                    .padding(.top, 40)
+//                    .font(.title)
+//                    .foregroundColor(.white)
                 
                 Spacer()
                 
                 VStack(spacing:0) {
                     Label {
-                        TextField("Citizen Id", text: $userId)
-                            .background(.gray)
-                            .keyboardType(.numberPad)
-                            .padding(.leading)
-                            .padding(.trailing)
-                            .font(.system(size: 24))
+                        ZStack(alignment: .leading) {
+                            if userId.isEmpty {
+                                Text("Citizen ID")
+                                    .foregroundColor(.white)
+                            }
+                            TextField("", text: $userId)
+                                .keyboardType(.numberPad)
+                                .foregroundColor(.white)
+                                .padding(.leading)
+                                .padding(.trailing)
+                                .font(.system(size: 16))
+                        }
                     } icon: {
                         Image(systemName: "person")
                             .frame(width: 24, height: 24)
                             .foregroundColor(.white)
+                            .padding(.leading)
                     }
                     .frame(height: 45)
                     .overlay(Rectangle().stroke(Color.white, lineWidth: 0.5).frame(height: 45))
                 
                     Label {
-                        TextField("Phone Number", text: $phoneNumber)
-                            .background(.gray)
-//                            .cornerRadius(5.0)
-                            .keyboardType(.numberPad)
-                            .padding(.leading)
-                            .padding(.trailing)
-                            .padding(.top)
-                            .font(.system(size: 24))
+                        ZStack(alignment: .leading) {
+                            if phoneNumber.isEmpty {
+                                Text("Phone Number")
+                                    .foregroundColor(.white)
+                            }
+                            TextField("", text: $phoneNumber)
+                                .keyboardType(.numberPad)
+                                .foregroundColor(.white)
+                                .padding(.leading)
+                                .padding(.trailing)
+                                .font(.system(size: 16))
+                        }
                     } icon: {
                         Image(systemName: "phone")
                             .frame(width: 24, height: 24)
                             .foregroundColor(.white)
-
+                            .padding(.leading)
                     }
+                    .frame(height: 45)
+                    .overlay(Rectangle().stroke(Color.white, lineWidth: 0.5).frame(height: 45))
                 }
                 .padding()
 
@@ -78,6 +98,10 @@ struct LoginView: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        Group {
+            LoginView()
+            LoginView()
+            LoginView()
+        }
     }
 }
