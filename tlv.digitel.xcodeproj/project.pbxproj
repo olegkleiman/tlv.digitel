@@ -11,6 +11,11 @@
 		DCECF420287B1FC300E6362C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF41F287B1FC300E6362C /* ContentView.swift */; };
 		DCECF422287B1FC400E6362C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCECF421287B1FC400E6362C /* Assets.xcassets */; };
 		DCECF425287B1FC400E6362C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCECF424287B1FC400E6362C /* Preview Assets.xcassets */; };
+		DCECF42E287B23AA00E6362C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF42D287B23AA00E6362C /* LoginView.swift */; };
+		DCECF431287B251300E6362C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF430287B251300E6362C /* HomeView.swift */; };
+		DCECF433287B258100E6362C /* DeeplinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF432287B258100E6362C /* DeeplinkManager.swift */; };
+		DCECF439287C725B00E6362C /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = DCECF438287C725B00E6362C /* JWTDecode */; };
+		DCECF43B287C915300E6362C /* CustomTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF43A287C915300E6362C /* CustomTextfield.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +24,11 @@
 		DCECF41F287B1FC300E6362C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DCECF421287B1FC400E6362C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCECF424287B1FC400E6362C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		DCECF42B287B1FD700E6362C /* tlv-digitel-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "tlv-digitel-Info.plist"; sourceTree = SOURCE_ROOT; };
+		DCECF42D287B23AA00E6362C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		DCECF430287B251300E6362C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DCECF432287B258100E6362C /* DeeplinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkManager.swift; sourceTree = "<group>"; };
+		DCECF43A287C915300E6362C /* CustomTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfield.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCECF439287C725B00E6362C /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,10 +62,13 @@
 		DCECF41C287B1FC300E6362C /* tlv.digitel */ = {
 			isa = PBXGroup;
 			children = (
+				DCECF42F287B247200E6362C /* Views */,
+				DCECF42B287B1FD700E6362C /* tlv-digitel-Info.plist */,
 				DCECF41D287B1FC300E6362C /* tlv_digitelApp.swift */,
 				DCECF41F287B1FC300E6362C /* ContentView.swift */,
 				DCECF421287B1FC400E6362C /* Assets.xcassets */,
 				DCECF423287B1FC400E6362C /* Preview Content */,
+				DCECF432287B258100E6362C /* DeeplinkManager.swift */,
 			);
 			path = tlv.digitel;
 			sourceTree = "<group>";
@@ -65,6 +79,16 @@
 				DCECF424287B1FC400E6362C /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DCECF42F287B247200E6362C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DCECF42D287B23AA00E6362C /* LoginView.swift */,
+				DCECF430287B251300E6362C /* HomeView.swift */,
+				DCECF43A287C915300E6362C /* CustomTextfield.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +107,9 @@
 			dependencies = (
 			);
 			name = tlv.digitel;
+			packageProductDependencies = (
+				DCECF438287C725B00E6362C /* JWTDecode */,
+			);
 			productName = tlv.digitel;
 			productReference = DCECF41A287B1FC300E6362C /* tlv.digitel.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +138,9 @@
 				Base,
 			);
 			mainGroup = DCECF411287B1FC300E6362C;
+			packageReferences = (
+				DCECF437287C725A00E6362C /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
+			);
 			productRefGroup = DCECF41B287B1FC300E6362C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -137,7 +167,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCECF42E287B23AA00E6362C /* LoginView.swift in Sources */,
+				DCECF431287B251300E6362C /* HomeView.swift in Sources */,
+				DCECF43B287C915300E6362C /* CustomTextfield.swift in Sources */,
 				DCECF420287B1FC300E6362C /* ContentView.swift in Sources */,
+				DCECF433287B258100E6362C /* DeeplinkManager.swift in Sources */,
 				DCECF41E287B1FC300E6362C /* tlv_digitelApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,6 +304,7 @@
 				DEVELOPMENT_TEAM = GX7N6F8DFJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "tlv-digitel-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,6 +334,7 @@
 				DEVELOPMENT_TEAM = GX7N6F8DFJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "tlv-digitel-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -339,6 +375,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DCECF437287C725A00E6362C /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DCECF438287C725B00E6362C /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCECF437287C725A00E6362C /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
+			productName = JWTDecode;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DCECF412287B1FC300E6362C /* Project object */;
 }
