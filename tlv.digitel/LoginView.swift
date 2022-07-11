@@ -31,11 +31,6 @@ struct LoginView: View {
                     .frame(width: 166.14, height: 26)
                     .padding(.top, 50)
                 
-//                Text("Welcome to TLV Digitel")
-//                    .padding(.top, 40)
-//                    .font(.title)
-//                    .foregroundColor(.white)
-                
                 Spacer()
                 
                 VStack(spacing:0) {
@@ -48,8 +43,6 @@ struct LoginView: View {
                             TextField("", text: $userId)
                                 .keyboardType(.numberPad)
                                 .foregroundColor(.white)
-                                .padding(.leading)
-                                .padding(.trailing)
                                 .font(.system(size: 16))
                         }
                     } icon: {
@@ -70,8 +63,6 @@ struct LoginView: View {
                             TextField("", text: $phoneNumber)
                                 .keyboardType(.numberPad)
                                 .foregroundColor(.white)
-                                .padding(.leading)
-                                .padding(.trailing)
                                 .font(.system(size: 16))
                         }
                     } icon: {
