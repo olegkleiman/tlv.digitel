@@ -8,8 +8,29 @@
 import SwiftUI
 
 struct LoginWizard: View {
+
+    @StateObject private var signinVM = SignInViewModel()
+    @EnvironmentObject var authentication: Authentication
+    
+    var clientId: String = "8739c7f1-e812-4461-b9c8-d670307dd22b"
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Group {
+            switch authentication.state {
+                
+                case .initial:
+                    CredentialsView(signinVM: signinVM)
+                        .environmentObject(authentication)
+                
+                case .initialized:
+                    OTPView(signinVM: signinVM,
+                            clientId: clientId)
+                        .environmentObject(authentication)
+                
+                default:
+                    Text("No action")
+            }
+        }
     }
 }
 

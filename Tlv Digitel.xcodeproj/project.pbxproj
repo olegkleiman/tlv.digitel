@@ -9,12 +9,17 @@
 /* Begin PBXBuildFile section */
 		DC24A941289838F800D90CAE /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DC24A940289838F800D90CAE /* KeychainSwift */; };
 		DC24A9442899066800D90CAE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DC24A9432899066800D90CAE /* Alamofire */; };
+		DC24A96028A4428800D90CAE /* OTPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC24A95F28A4428500D90CAE /* OTPView.swift */; };
+		DC24A96328A4434000D90CAE /* LoginWizard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC24A96228A4434000D90CAE /* LoginWizard.swift */; };
+		DC24A96628A46FED00D90CAE /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC24A96528A46FEC00D90CAE /* Credentials.swift */; };
+		DC24A96828A470D000D90CAE /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC24A96728A470D000D90CAE /* SignInViewModel.swift */; };
+		DC24A96A28A4726E00D90CAE /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC24A96928A4726E00D90CAE /* Authentication.swift */; };
 		DCCB4C312896E1EB001CC6F0 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = DCCB4C302896E1EB001CC6F0 /* SwiftKeychainWrapper */; };
 		DCECF41E287B1FC300E6362C /* tlv_digitelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF41D287B1FC300E6362C /* tlv_digitelApp.swift */; };
 		DCECF420287B1FC300E6362C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF41F287B1FC300E6362C /* ContentView.swift */; };
 		DCECF422287B1FC400E6362C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCECF421287B1FC400E6362C /* Assets.xcassets */; };
 		DCECF425287B1FC400E6362C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCECF424287B1FC400E6362C /* Preview Assets.xcassets */; };
-		DCECF42E287B23AA00E6362C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF42D287B23AA00E6362C /* LoginView.swift */; };
+		DCECF42E287B23AA00E6362C /* CredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF42D287B23AA00E6362C /* CredentialsView.swift */; };
 		DCECF431287B251300E6362C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF430287B251300E6362C /* HomeView.swift */; };
 		DCECF433287B258100E6362C /* DeeplinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF432287B258100E6362C /* DeeplinkManager.swift */; };
 		DCECF439287C725B00E6362C /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = DCECF438287C725B00E6362C /* JWTDecode */; };
@@ -22,14 +27,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DCCB4C332896E6F7001CC6F0 /* tlv.digitel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tlv.digitel.entitlements; sourceTree = "<group>"; };
-		DCECF41A287B1FC300E6362C /* tlv.digitel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tlv.digitel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC24A95E28A260A600D90CAE /* tlv.digitel.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = tlv.digitel.entitlements; sourceTree = "<group>"; };
+		DC24A95F28A4428500D90CAE /* OTPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPView.swift; sourceTree = "<group>"; };
+		DC24A96228A4434000D90CAE /* LoginWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWizard.swift; sourceTree = "<group>"; };
+		DC24A96528A46FEC00D90CAE /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		DC24A96728A470D000D90CAE /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		DC24A96928A4726E00D90CAE /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		DCECF41A287B1FC300E6362C /* Tlv Digitel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tlv Digitel.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCECF41D287B1FC300E6362C /* tlv_digitelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tlv_digitelApp.swift; sourceTree = "<group>"; };
 		DCECF41F287B1FC300E6362C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DCECF421287B1FC400E6362C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCECF424287B1FC400E6362C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DCECF42B287B1FD700E6362C /* tlv-digitel-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "tlv-digitel-Info.plist"; sourceTree = SOURCE_ROOT; };
-		DCECF42D287B23AA00E6362C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		DCECF42D287B23AA00E6362C /* CredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsView.swift; sourceTree = "<group>"; };
 		DCECF430287B251300E6362C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DCECF432287B258100E6362C /* DeeplinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkManager.swift; sourceTree = "<group>"; };
 		DCECF43A287C915300E6362C /* CustomTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextfield.swift; sourceTree = "<group>"; };
@@ -50,6 +60,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC24A96128A4431D00D90CAE /* LoginWizard */ = {
+			isa = PBXGroup;
+			children = (
+				DC24A96228A4434000D90CAE /* LoginWizard.swift */,
+				DCECF42D287B23AA00E6362C /* CredentialsView.swift */,
+				DC24A95F28A4428500D90CAE /* OTPView.swift */,
+			);
+			name = LoginWizard;
+			sourceTree = "<group>";
+		};
+		DC24A96428A46FC800D90CAE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DC24A96528A46FEC00D90CAE /* Credentials.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		DCECF411287B1FC300E6362C = {
 			isa = PBXGroup;
 			children = (
@@ -61,7 +89,7 @@
 		DCECF41B287B1FC300E6362C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DCECF41A287B1FC300E6362C /* tlv.digitel.app */,
+				DCECF41A287B1FC300E6362C /* Tlv Digitel.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -69,13 +97,15 @@
 		DCECF41C287B1FC300E6362C /* tlv.digitel */ = {
 			isa = PBXGroup;
 			children = (
-				DCCB4C332896E6F7001CC6F0 /* tlv.digitel.entitlements */,
+				DC24A96428A46FC800D90CAE /* Models */,
+				DC24A95E28A260A600D90CAE /* tlv.digitel.entitlements */,
 				DCECF42F287B247200E6362C /* Views */,
 				DCECF42B287B1FD700E6362C /* tlv-digitel-Info.plist */,
 				DCECF41D287B1FC300E6362C /* tlv_digitelApp.swift */,
 				DCECF421287B1FC400E6362C /* Assets.xcassets */,
 				DCECF423287B1FC400E6362C /* Preview Content */,
 				DCECF432287B258100E6362C /* DeeplinkManager.swift */,
+				DC24A96928A4726E00D90CAE /* Authentication.swift */,
 			);
 			path = tlv.digitel;
 			sourceTree = "<group>";
@@ -91,10 +121,11 @@
 		DCECF42F287B247200E6362C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DC24A96128A4431D00D90CAE /* LoginWizard */,
 				DCECF41F287B1FC300E6362C /* ContentView.swift */,
-				DCECF42D287B23AA00E6362C /* LoginView.swift */,
 				DCECF430287B251300E6362C /* HomeView.swift */,
 				DCECF43A287C915300E6362C /* CustomTextfield.swift */,
+				DC24A96728A470D000D90CAE /* SignInViewModel.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -102,9 +133,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DCECF419287B1FC300E6362C /* tlv.digitel */ = {
+		DCECF419287B1FC300E6362C /* Tlv Digitel */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DCECF428287B1FC400E6362C /* Build configuration list for PBXNativeTarget "tlv.digitel" */;
+			buildConfigurationList = DCECF428287B1FC400E6362C /* Build configuration list for PBXNativeTarget "Tlv Digitel" */;
 			buildPhases = (
 				DCECF416287B1FC300E6362C /* Sources */,
 				DCECF417287B1FC300E6362C /* Frameworks */,
@@ -114,7 +145,7 @@
 			);
 			dependencies = (
 			);
-			name = tlv.digitel;
+			name = "Tlv Digitel";
 			packageProductDependencies = (
 				DCECF438287C725B00E6362C /* JWTDecode */,
 				DCCB4C302896E1EB001CC6F0 /* SwiftKeychainWrapper */,
@@ -122,7 +153,7 @@
 				DC24A9432899066800D90CAE /* Alamofire */,
 			);
 			productName = tlv.digitel;
-			productReference = DCECF41A287B1FC300E6362C /* tlv.digitel.app */;
+			productReference = DCECF41A287B1FC300E6362C /* Tlv Digitel.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -140,7 +171,7 @@
 					};
 				};
 			};
-			buildConfigurationList = DCECF415287B1FC300E6362C /* Build configuration list for PBXProject "tlv.digitel" */;
+			buildConfigurationList = DCECF415287B1FC300E6362C /* Build configuration list for PBXProject "Tlv Digitel" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -159,7 +190,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DCECF419287B1FC300E6362C /* tlv.digitel */,
+				DCECF419287B1FC300E6362C /* Tlv Digitel */,
 			);
 		};
 /* End PBXProject section */
@@ -181,12 +212,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCECF42E287B23AA00E6362C /* LoginView.swift in Sources */,
+				DC24A96028A4428800D90CAE /* OTPView.swift in Sources */,
+				DCECF42E287B23AA00E6362C /* CredentialsView.swift in Sources */,
 				DCECF431287B251300E6362C /* HomeView.swift in Sources */,
+				DC24A96628A46FED00D90CAE /* Credentials.swift in Sources */,
+				DC24A96828A470D000D90CAE /* SignInViewModel.swift in Sources */,
 				DCECF43B287C915300E6362C /* CustomTextfield.swift in Sources */,
 				DCECF420287B1FC300E6362C /* ContentView.swift in Sources */,
 				DCECF433287B258100E6362C /* DeeplinkManager.swift in Sources */,
+				DC24A96328A4434000D90CAE /* LoginWizard.swift in Sources */,
 				DCECF41E287B1FC300E6362C /* tlv_digitelApp.swift in Sources */,
+				DC24A96A28A4726E00D90CAE /* Authentication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,7 +412,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DCECF415287B1FC300E6362C /* Build configuration list for PBXProject "tlv.digitel" */ = {
+		DCECF415287B1FC300E6362C /* Build configuration list for PBXProject "Tlv Digitel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DCECF426287B1FC400E6362C /* Debug */,
@@ -385,7 +421,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DCECF428287B1FC400E6362C /* Build configuration list for PBXNativeTarget "tlv.digitel" */ = {
+		DCECF428287B1FC400E6362C /* Build configuration list for PBXNativeTarget "Tlv Digitel" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DCECF429287B1FC400E6362C /* Debug */,

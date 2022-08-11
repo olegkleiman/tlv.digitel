@@ -15,16 +15,14 @@ struct SendOTPResponse: Codable {
     let errorId: Int
 }
 
-struct LoginView: View {
+struct CredentialsView: View {
     
-    @Binding var authState: AuthState
+    @ObservedObject var signinVM: SignInViewModel
+    
+    @EnvironmentObject var authentication: Authentication
     
     //MARK: - PROPERTIES
-    @State private var userId: String = "313069486"
-    @State private var phoneNumber: String = "0543307026"
-    @State private var clientId: String = "bc00c1e4-30e4-443c-a559-a5b39ff42586"
     @State var isLoading: Bool = false
-    @State var pageNum: Int = 1
     
     @State  var errorMessage: String = ""
     @State  var showError: Bool = false
@@ -51,11 +49,11 @@ struct LoginView: View {
                 VStack(spacing:0) {
                     Label {
                         ZStack(alignment: .leading) {
-                            if userId.isEmpty {
+                            if signinVM.credentials.userId.isEmpty {
                                 Text("Citizen ID")
                                     .foregroundColor(.white)
                             }
-                            TextField("", text: $userId)
+                            TextField("", text: $signinVM.credentials.userId)
                                 .keyboardType(.numberPad)
                                 .foregroundColor(.white)
                                 .font(.system(size: 16))
@@ -71,11 +69,11 @@ struct LoginView: View {
                 
                     Label {
                         ZStack(alignment: .leading) {
-                            if phoneNumber.isEmpty {
+                            if signinVM.credentials.phoneNumber.isEmpty {
                                 Text("Phone Number")
                                     .foregroundColor(.white)
                             }
-                            TextField("", text: $phoneNumber)
+                            TextField("", text: $signinVM.credentials.phoneNumber)
                                 .keyboardType(.numberPad)
                                 .foregroundColor(.white)
                                 .font(.system(size: 16))
@@ -104,24 +102,11 @@ struct LoginView: View {
                         Task {
                             self.isLoading.toggle()
                             
-                            let url = URL(string:"https://tlvsso.azurewebsites.net/api/request_otp")!
-                            
-                            let parameters: [String: String] = [
-                                "userId": userId,
-                                "phoneNumber": phoneNumber,
-                                "clientId": clientId
-                            ]
-                            
-                            AF.request(url, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default)
-                                .responseDecodable(of: SendOTPResponse.self) { response in
-                                    if response.value!.isError as Bool {
-                                        self.errorMessage = (response.value?.errorDesc as? String)!
-                                        self.showError.toggle()
-                                        return
-                                    }
-                                    
-                                    pageNum = 2
+                            signinVM.requestOTP { success in
+                                let state: Authentication.State = success ? .initialized : .error
+                                authentication.updateValidation(_state: state)
                             }
+
                         }
                     }
                     .opacity(!isLoading ? 1 : 0)
@@ -133,10 +118,13 @@ struct LoginView: View {
     
 }
 
-struct Login_Previews: PreviewProvider {
+struct Credentials_Previews: PreviewProvider {
+
     static var previews: some View {
         Group {
-            LoginView(authState: .constant(.forceLogin))
+            CredentialsView(
+                            signinVM: SignInViewModel()
+                            )
         }
     }
 }
