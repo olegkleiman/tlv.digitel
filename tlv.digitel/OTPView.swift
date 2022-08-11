@@ -18,7 +18,8 @@ struct OTPView: View {
     
     @State private var otp: String = ""
     @State private var isLoading: Bool = false
-    
+    @State private var isError: Bool = false
+    @State private var errorMessage: String = ""
     @State var jsonTokens: DecodableTokens?
     
     var body: some View {
@@ -91,15 +92,27 @@ struct OTPView: View {
                                         
                                     } catch  let error {
                                         print("🥶 \(error)")
+                                        self.errorMessage = error.localizedDescription
+                                        self.isError.toggle()
                                     }
                                 
                                 case .failure(let error):
                                     print("🥶 \(error)")
+                                    self.errorMessage = error.localizedDescription
+                                self.isError.toggle()
                             }
                             
                         }
                     }
                     .padding()
+                    .alert(isPresented: $isError) {
+                        Alert(title: Text("Error"),
+                              message: Text(errorMessage),
+                              dismissButton: .default(Text("OK")) {
+                                self.isError.toggle()
+                              }
+                        )
+                    }
 
                 }
             }

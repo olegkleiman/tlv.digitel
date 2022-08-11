@@ -21,9 +21,8 @@ class SignInViewModel: ObservableObject {
     
     func requestOTP(completion: @escaping (Bool) -> Void) {
         
-        defer { showProgressView = false }
-        
         showProgressView = true
+        defer { showProgressView = false }
         
         let url = URL(string:"https://tlvsso.azurewebsites.net/api/request_otp")!
         
