@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC24A941289838F800D90CAE /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DC24A940289838F800D90CAE /* KeychainSwift */; };
+		DC24A9442899066800D90CAE /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = DC24A9432899066800D90CAE /* Alamofire */; };
+		DCCB4C312896E1EB001CC6F0 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = DCCB4C302896E1EB001CC6F0 /* SwiftKeychainWrapper */; };
 		DCECF41E287B1FC300E6362C /* tlv_digitelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF41D287B1FC300E6362C /* tlv_digitelApp.swift */; };
 		DCECF420287B1FC300E6362C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF41F287B1FC300E6362C /* ContentView.swift */; };
 		DCECF422287B1FC400E6362C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCECF421287B1FC400E6362C /* Assets.xcassets */; };
@@ -19,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DCCB4C332896E6F7001CC6F0 /* tlv.digitel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = tlv.digitel.entitlements; sourceTree = "<group>"; };
 		DCECF41A287B1FC300E6362C /* tlv.digitel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tlv.digitel.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCECF41D287B1FC300E6362C /* tlv_digitelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tlv_digitelApp.swift; sourceTree = "<group>"; };
 		DCECF41F287B1FC300E6362C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -36,6 +40,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC24A941289838F800D90CAE /* KeychainSwift in Frameworks */,
+				DC24A9442899066800D90CAE /* Alamofire in Frameworks */,
+				DCCB4C312896E1EB001CC6F0 /* SwiftKeychainWrapper in Frameworks */,
 				DCECF439287C725B00E6362C /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,10 +69,10 @@
 		DCECF41C287B1FC300E6362C /* tlv.digitel */ = {
 			isa = PBXGroup;
 			children = (
+				DCCB4C332896E6F7001CC6F0 /* tlv.digitel.entitlements */,
 				DCECF42F287B247200E6362C /* Views */,
 				DCECF42B287B1FD700E6362C /* tlv-digitel-Info.plist */,
 				DCECF41D287B1FC300E6362C /* tlv_digitelApp.swift */,
-				DCECF41F287B1FC300E6362C /* ContentView.swift */,
 				DCECF421287B1FC400E6362C /* Assets.xcassets */,
 				DCECF423287B1FC400E6362C /* Preview Content */,
 				DCECF432287B258100E6362C /* DeeplinkManager.swift */,
@@ -84,6 +91,7 @@
 		DCECF42F287B247200E6362C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DCECF41F287B1FC300E6362C /* ContentView.swift */,
 				DCECF42D287B23AA00E6362C /* LoginView.swift */,
 				DCECF430287B251300E6362C /* HomeView.swift */,
 				DCECF43A287C915300E6362C /* CustomTextfield.swift */,
@@ -109,6 +117,9 @@
 			name = tlv.digitel;
 			packageProductDependencies = (
 				DCECF438287C725B00E6362C /* JWTDecode */,
+				DCCB4C302896E1EB001CC6F0 /* SwiftKeychainWrapper */,
+				DC24A940289838F800D90CAE /* KeychainSwift */,
+				DC24A9432899066800D90CAE /* Alamofire */,
 			);
 			productName = tlv.digitel;
 			productReference = DCECF41A287B1FC300E6362C /* tlv.digitel.app */;
@@ -140,6 +151,9 @@
 			mainGroup = DCECF411287B1FC300E6362C;
 			packageReferences = (
 				DCECF437287C725A00E6362C /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
+				DCCB4C2F2896E1EB001CC6F0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+				DC24A93F289838F800D90CAE /* XCRemoteSwiftPackageReference "keychain-swift" */,
+				DC24A9422899066800D90CAE /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = DCECF41B287B1FC300E6362C /* Products */;
 			projectDirPath = "";
@@ -298,6 +312,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = tlv.digitel/tlv.digitel.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"tlv.digitel/Preview Content\"";
@@ -315,8 +331,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "---.tlv-digitel";
+				PRODUCT_BUNDLE_IDENTIFIER = "gov.tel-aviv.digitel";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -328,6 +345,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = tlv.digitel/tlv.digitel.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"tlv.digitel/Preview Content\"";
@@ -345,8 +364,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "---.tlv-digitel";
+				PRODUCT_BUNDLE_IDENTIFIER = "gov.tel-aviv.digitel";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -377,6 +397,30 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		DC24A93F289838F800D90CAE /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		DC24A9422899066800D90CAE /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		DCCB4C2F2896E1EB001CC6F0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
 		DCECF437287C725A00E6362C /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
@@ -388,6 +432,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DC24A940289838F800D90CAE /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC24A93F289838F800D90CAE /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
+		DC24A9432899066800D90CAE /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DC24A9422899066800D90CAE /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		DCCB4C302896E1EB001CC6F0 /* SwiftKeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCCB4C2F2896E1EB001CC6F0 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			productName = SwiftKeychainWrapper;
+		};
 		DCECF438287C725B00E6362C /* JWTDecode */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DCECF437287C725A00E6362C /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;

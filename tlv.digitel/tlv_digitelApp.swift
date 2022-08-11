@@ -17,25 +17,27 @@ struct tlv_digitelApp: App {
         
         WindowGroup {
             
-            Group {
-                
-                switch self.deeplinkTarget {
-                    case .home:
-                        HomeView(accessToken: $accessToken)
-                    case .login:
-                        LoginView()
-                    case .none:
-                        LoginView()
-                }
-                
-            }
-            .onOpenURL { url in
-                let deeplinkManager = DeeplinkManager()
-                let deeplink = deeplinkManager.manage(url: url)
-                
-                self.accessToken = deeplinkManager.accessToken
-                self.deeplinkTarget = deeplink
-            }
+            ContentView()
+            
+//            Group {
+//
+//                switch self.deeplinkTarget {
+//                    case .home:
+//                        HomeView(accessToken: $accessToken)
+//                    case .login:
+//                        LoginView()
+//                    case .none:
+//                        LoginView()
+//                }
+//
+//            }
+//            .onOpenURL { url in
+//                let deeplinkManager = DeeplinkManager()
+//                let deeplink = deeplinkManager.manage(url: url)
+//
+//                self.accessToken = deeplinkManager.accessToken
+//                self.deeplinkTarget = deeplink
+//            }
         }
     }
 }

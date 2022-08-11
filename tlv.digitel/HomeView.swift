@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 import JWTDecode
 
 struct HomeView: View {
@@ -28,6 +29,9 @@ struct HomeView: View {
                 Text(verbatim: name)
                     .foregroundColor(.white)
                     .onAppear {
+                        
+
+                        
                         let jwt = try? decode(jwt: accessToken!)
 
                         let claim = jwt?.claim(name: "name")
