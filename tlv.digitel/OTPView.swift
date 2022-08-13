@@ -18,7 +18,7 @@ struct OTPView: View {
     
     @State private var otp: String = ""
     @State private var isLoading: Bool = false
-    @State private var isError: Bool = false
+    @State private var didError: Bool = false
     @State private var errorMessage: String = ""
     @State var jsonTokens: DecodableTokens?
     
@@ -31,15 +31,26 @@ struct OTPView: View {
             
             VStack {
                 HStack {
-                    Text("OTP")
-                        .textContentType(.oneTimeCode)
-                        .foregroundColor(.white)
-                        .padding()
-                        .font(.body)
-                    TextField("Code you've received", text: $otp)
-//                        .foregroundColor(.white)
-                        .textFieldStyle(RoundedBorderTextFieldStyle.init())
-                        .keyboardType(.numberPad)
+                    Label {
+                        ZStack(alignment: .leading) {
+                            if( otp.isEmpty ) {
+                                Text("Code you've received")
+                                    .foregroundColor(.gray)
+                            }
+                            TextField("", text: $otp)
+                                .keyboardType(.numberPad)
+                                .foregroundColor(.white)
+                                .font(.system(size: 16))
+                        }
+                    } icon: {
+                        Image(systemName: "message")
+                            .frame(width: 24, height: 24)
+                            .foregroundColor(.white)
+                            .padding(.leading)
+                    }
+                    .frame(height: 45)
+                    .overlay(Rectangle().stroke(Color.white, lineWidth: 0.5).frame(height: 45))
+
                 }
                 .padding()
 
@@ -48,72 +59,51 @@ struct OTPView: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                 } else {
                     Button("Continue") {
-                        let url = URL(string: "https://tlvsso.azurewebsites.net/api/login")!
-                        
-                        let deviceId = UIDevice.current.identifierForVendor!.uuidString
-                        let parameters: [String: String] = [
-                            "phoneNumber": signinVM.credentials.phoneNumber,
-                            "otp": otp,
-                            "clientId": clientId,
-                            "scope": "openid offline_access https://TlvfpB2CPPR.onmicrosoft.com/\(clientId)/TLV.Digitel.All",
-                            "deviceId": deviceId
-                        ]
                         
                         self.isLoading.toggle()
-                        
-                        AF.request(url,
-                                   method: .post,
-                                   parameters: parameters,
-                                   encoder: JSONParameterEncoder.default)
-                        .validate(statusCode: 200..<300)
-                        .responseDecodable(of: DecodableTokens.self) { response in
-                            
-                            switch response.result {
-                                case .success(let tokens):
-                                    do {
-                                        defer { self.isLoading.toggle() }
-                                        
-                                        self.jsonTokens = tokens
-                                        
-                                        let jsonEncoder = JSONEncoder()
-                                        let jsonData = try jsonEncoder.encode(tokens)
-                                        let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
-                                        
-                                        let keychain = KeychainSwift()
-                                        let appID = "GX7N6F8DFJ.gov.tel-aviv.digitel"
-                                        keychain.accessGroup = appID
-                                        let _ = keychain.set(jsonString!, forKey: "tlv_tokens")
-                                        
-                                        let keychainAccessGroupName = "GX7N6F8DFJ.gov.tlv.ssoKeychainGroup"
-                                        keychain.accessGroup = keychainAccessGroupName
-                                        let _ = keychain.set(jsonTokens!.sso_token!, forKey: "sso_token")
-                                        
-                                        authentication.state = .authenticated
-                                        
-                                    } catch  let error {
-                                        print("🥶 \(error)")
-                                        self.errorMessage = error.localizedDescription
-                                        self.isError.toggle()
-                                    }
+                        defer { self.isLoading.toggle() }
+
+                        signinVM.login(clientId: clientId, otp: otp) { (tokens, error) in
+
+                            guard tokens != nil
+                            else {
+                                self.didError.toggle()
+                                print("🥶 \(String(describing: error?.localizedDescription))")
+                                self.errorMessage = error!.localizedDescription
                                 
-                                case .failure(let error):
-                                    print("🥶 \(error)")
-                                    self.errorMessage = error.localizedDescription
-                                self.isError.toggle()
+                                return
                             }
                             
+                            self.jsonTokens = tokens
+
+                            let jsonEncoder = JSONEncoder()
+                            let jsonData = try jsonEncoder.encode(tokens)
+                            let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
+
+                            let keychain = KeychainSwift()
+                            let appID = "GX7N6F8DFJ.gov.tel-aviv.digitel"
+                            keychain.accessGroup = appID
+                            let _ = keychain.set(jsonString!, forKey: "tlv_tokens")
+
+                            let keychainAccessGroupName = "GX7N6F8DFJ.gov.tlv.ssoKeychainGroup"
+                            keychain.accessGroup = keychainAccessGroupName
+                            let _ = keychain.set(jsonTokens!.sso_token!, forKey: "sso_token")
+
+                            authentication.state = .authenticated
                         }
                     }
                     .padding()
-                    .alert(isPresented: $isError) {
-                        Alert(title: Text("Error"),
-                              message: Text(errorMessage),
-                              dismissButton: .default(Text("OK")) {
-                                self.isError.toggle()
-                              }
-                        )
-                    }
-
+                    .alert("Error",
+                           isPresented: $didError,
+                           actions: {
+                        
+                                Button("Retry", role: nil, action: {} )
+                                Button("Cancel", role: .cancel, action: {} )
+                            },
+                           message: {
+                                Text(errorMessage)
+                            }
+                           )
                 }
             }
         }

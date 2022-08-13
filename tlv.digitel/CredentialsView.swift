@@ -122,9 +122,7 @@ struct Credentials_Previews: PreviewProvider {
 
     static var previews: some View {
         Group {
-            CredentialsView(
-                            signinVM: SignInViewModel()
-                            )
+            CredentialsView(signinVM: SignInViewModel())
         }
     }
 }

@@ -5,18 +5,52 @@
 //  Created by Oleg Kleiman on 11/08/2022.
 //
 
-import Foundation
+import SwiftUI
 import Alamofire
 
 class SignInViewModel: ObservableObject {
     
     @Published var credentials = Credentials()
     @Published var showProgressView = false
+    
+    func login(clientId: String,
+               otp: String,
+               completion: @escaping (DecodableTokens?, Error?) throws -> Void) {
+     
+        let url = URL(string: "https://tlvsso.azurewebsites.net/api/login")!
         
-    func login(completion: @escaping (Bool) -> Void) {
-        showProgressView = true
+        let deviceId = UIDevice.current.identifierForVendor!.uuidString
+        let parameters: [String: String] = [
+            "phoneNumber": credentials.phoneNumber,
+            "otp": otp,
+            "clientId": clientId,
+            "scope": "openid offline_access https://TlvfpB2CPPR.onmicrosoft.com/\(clientId)/TLV.Digitel.All",
+            "deviceId": deviceId
+        ]
+
+        AF.request(url,
+                   method: .post,
+                   parameters: parameters,
+                   encoder: JSONParameterEncoder.default)
+        .validate(statusCode: 200..<300)
+        .responseDecodable(of: DecodableTokens.self) { response in
+            
+            switch response.result {
+                
+                case .success(let tokens):
+                    try! completion(tokens, nil)
+                
+                case .failure(let error):
+                    if let data = response.data {
+                        let json = String(data: data, encoding: String.Encoding.utf8)
+                        print("Failure Response: \(json)")
+                    }
+                    try! completion(nil, error)
+                
+            }
+            
+        }
         
-        completion(true)
     }
     
     func requestOTP(completion: @escaping (Bool) -> Void) {
