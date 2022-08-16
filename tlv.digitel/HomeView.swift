@@ -35,8 +35,6 @@ struct HomeView: View {
     @State var oauthTokens: DecodableTokens?
     @State var isLoading: Bool = false
     
-    var clientId: String = "8739c7f1-e812-4461-b9c8-d670307dd22b"
-    
     var body: some View {
         ZStack {
             
@@ -75,8 +73,8 @@ struct HomeView: View {
                             let url = "https://tlvsso.azurewebsites.net/api/sso_login?code=W0oWhTIOI-uRnkXlpAgy0fiAXqf9Fit7Oa9ADqoW2isEAzFu7jyt6Q=="
                             let deviceId = UIDevice.current.identifierForVendor!.uuidString
                             let parameters: [String: String] = [
-                                "clientId": clientId,
-                                "scope": "openid offline_access https://TlvfpB2CPPR.onmicrosoft.com/\(clientId)/TLV.Digitel.All",
+                                "clientId": CLIENT_ID,
+                                "scope": "openid offline_access https://TlvfpB2CPPR.onmicrosoft.com/\(CLIENT_ID)/TLV.Digitel.All",
                                 "deviceId": deviceId,
                                 "ssoToken": ssoToken
                             ]

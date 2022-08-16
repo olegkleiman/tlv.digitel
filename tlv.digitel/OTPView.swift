@@ -14,7 +14,6 @@ struct OTPView: View {
     @EnvironmentObject var authentication: Authentication
     
     @ObservedObject var signinVM: SignInViewModel
-    var clientId: String
     
     @State private var otp: String = ""
     @State private var isLoading: Bool = false
@@ -63,7 +62,7 @@ struct OTPView: View {
                         self.isLoading.toggle()
                         defer { self.isLoading.toggle() }
 
-                        signinVM.login(clientId: clientId, otp: otp) { (tokens, error) in
+                        signinVM.login(clientId: CLIENT_ID, otp: otp) { (tokens, error) in
 
                             guard tokens != nil
                             else {
@@ -113,7 +112,6 @@ struct OTPView: View {
 
 struct OTPView_Previews: PreviewProvider {
     static var previews: some View {
-        OTPView(signinVM: SignInViewModel(),
-                clientId: "8739c7f1-e812-4461-b9c8-d670307dd22b")
+        OTPView(signinVM: SignInViewModel())
     }
 }

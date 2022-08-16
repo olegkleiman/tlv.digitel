@@ -15,6 +15,11 @@ struct SendOTPResponse: Codable {
     let errorId: Int
 }
 
+let DEV_CLIENTID: String = "fccb7f50-ba2c-4941-acc3-a2169aab5f50"
+let PREPROD_CLIENT_ID: String = "bc00c1e4-30e4-443c-a559-a5b39ff42586"
+
+var CLIENT_ID: String = PREPROD_CLIENT_ID
+
 struct CredentialsView: View {
     
     @ObservedObject var signinVM: SignInViewModel
@@ -23,7 +28,7 @@ struct CredentialsView: View {
     
     //MARK: - PROPERTIES
     @State var isLoading: Bool = false
-    
+    @State private var clientId: String = PREPROD_CLIENT_ID
     @State  var errorMessage: String = ""
     @State  var showError: Bool = false
     
@@ -47,6 +52,39 @@ struct CredentialsView: View {
                 Spacer()
                 
                 VStack(spacing:0) {
+                    
+                    HStack {
+                        Menu {
+                            Button {
+                                CLIENT_ID = DEV_CLIENTID
+                                clientId = DEV_CLIENTID
+                            } label: {
+                                Text("Development")
+                                if clientId == DEV_CLIENTID {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
+                            
+                            Button {
+                                CLIENT_ID = PREPROD_CLIENT_ID
+                                clientId = PREPROD_CLIENT_ID
+                            } label: {
+                                Text("Pre-Production")
+                                if clientId == PREPROD_CLIENT_ID  {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
+                        } label: {
+                            Text("Environment")
+                                .font(.body)
+                                .foregroundColor(.white)
+                            Image(systemName: "tag.circle")
+                                .foregroundColor(.white)
+                        }
+                        .padding()
+                    }
+                    .frame(minWidth: 0, maxHeight: 300, alignment: .topLeading)
+                    
                     Label {
                         ZStack(alignment: .leading) {
                             if signinVM.credentials.userId.isEmpty {
