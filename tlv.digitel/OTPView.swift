@@ -19,6 +19,7 @@ struct OTPView: View {
     @State private var isLoading: Bool = false
     @State private var didError: Bool = false
     @State private var errorMessage: String = ""
+    @State var dataAvailable = false
     @State var jsonTokens: DecodableTokens?
     
     var body: some View {
@@ -37,9 +38,10 @@ struct OTPView: View {
                                     .foregroundColor(.gray)
                             }
                             TextField("", text: $otp)
-                                .keyboardType(.numberPad)
-                                .foregroundColor(.white)
-                                .font(.system(size: 16))
+                            .keyboardType(.numberPad)
+                            .foregroundColor(.white)
+                            .font(.system(size: 16))
+                                
                         }
                     } icon: {
                         Image(systemName: "message")
@@ -57,52 +59,63 @@ struct OTPView: View {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                 } else {
-                    Button("Continue") {
+                    ZStack {
                         
-                        self.isLoading.toggle()
-                        defer { self.isLoading.toggle() }
-
-                        signinVM.login(clientId: CLIENT_ID, otp: otp) { (tokens, error) in
-
-                            guard tokens != nil
-                            else {
-                                self.didError.toggle()
-                                print("🥶 \(String(describing: error?.localizedDescription))")
-                                self.errorMessage = error!.localizedDescription
-                                
-                                return
-                            }
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                            .padding()
+                            .opacity(isLoading ? 1 : 0)
+                        
+                        Button("Continue") {
                             
-                            self.jsonTokens = tokens
+                            self.isLoading.toggle()
 
-                            let jsonEncoder = JSONEncoder()
-                            let jsonData = try jsonEncoder.encode(tokens)
-                            let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
+                            signinVM.login(clientId: CLIENT_ID, otp: otp) { (tokens, error) in
 
-                            let keychain = KeychainSwift()
-                            let appID = "GX7N6F8DFJ.gov.tel-aviv.digitel"
-                            keychain.accessGroup = appID
-                            let _ = keychain.set(jsonString!, forKey: "tlv_tokens")
+                                self.isLoading.toggle()
+                                
+                                guard tokens != nil
+                                else {
+                                    self.didError.toggle()
+                                    print("🥶 \(String(describing: error?.localizedDescription))")
+                                    self.errorMessage = error!.localizedDescription
+                                    
+                                    return
+                                }
+                                
+                                self.jsonTokens = tokens
 
-                            let keychainAccessGroupName = "GX7N6F8DFJ.gov.tlv.ssoKeychainGroup"
-                            keychain.accessGroup = keychainAccessGroupName
-                            let _ = keychain.set(jsonTokens!.sso_token!, forKey: "sso_token")
+                                let jsonEncoder = JSONEncoder()
+                                let jsonData = try jsonEncoder.encode(tokens)
+                                let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
 
-                            authentication.state = .authenticated
-                        }
-                    }
-                    .padding()
-                    .alert("Error",
-                           isPresented: $didError,
-                           actions: {
-                        
-                                Button("Retry", role: nil, action: {} )
-                                Button("Cancel", role: .cancel, action: {} )
-                            },
-                           message: {
-                                Text(errorMessage)
+                                let keychain = KeychainSwift()
+                                let appID = "GX7N6F8DFJ.gov.tel-aviv.digitel"
+                                keychain.accessGroup = appID
+                                let _ = keychain.set(jsonString!, forKey: "tlv_tokens")
+
+                                let keychainAccessGroupName = "GX7N6F8DFJ.gov.tlv.ssoKeychainGroup"
+                                keychain.accessGroup = keychainAccessGroupName
+                                let _ = keychain.set(jsonTokens!.sso_token!, forKey: "sso_token")
+
+                                authentication.state = .authenticated
                             }
-                           )
+                        }
+                        .padding()
+                        .opacity(!isLoading ? 1 : 0)
+                        .disabled(otp.isEmpty)
+                        .alert("Error",
+                               isPresented: $didError,
+                               actions: {
+                            
+                                    Button("Retry", role: nil, action: {} )
+                                    Button("Cancel", role: .cancel, action: {} )
+                                },
+                               message: {
+                                    Text(errorMessage)
+                                }
+                               )
+                    }
                 }
             }
         }

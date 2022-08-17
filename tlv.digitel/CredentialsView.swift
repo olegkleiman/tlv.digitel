@@ -29,8 +29,9 @@ struct CredentialsView: View {
     //MARK: - PROPERTIES
     @State var isLoading: Bool = false
     @State private var clientId: String = PREPROD_CLIENT_ID
-    @State  var errorMessage: String = ""
-    @State  var showError: Bool = false
+    @State var errorMessage: String = ""
+    @State var showError: Bool = false
+    @State var dataAvailable = false
     
     var body: some View {
         
@@ -141,6 +142,9 @@ struct CredentialsView: View {
                             self.isLoading.toggle()
                             
                             signinVM.requestOTP { success in
+                                
+                                dataAvailable = true
+                                
                                 let state: Authentication.State = success ? .initialized : .error
                                 authentication.updateValidation(_state: state)
                             }
