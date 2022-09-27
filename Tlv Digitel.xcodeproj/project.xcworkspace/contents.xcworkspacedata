@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/olegk/dev/tlv.sso/tlv.digitel/Tlv Digitel.xcodeproj">
+      location = "self:">
    </FileRef>
 </Workspace>

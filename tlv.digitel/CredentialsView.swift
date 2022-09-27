@@ -15,10 +15,14 @@ struct SendOTPResponse: Codable {
     let errorId: Int
 }
 
-let DEV_CLIENTID: String = "fccb7f50-ba2c-4941-acc3-a2169aab5f50"
+let DEV_CLIENT_ID: String = "fccb7f50-ba2c-4941-acc3-a2169aab5f50"
 let PREPROD_CLIENT_ID: String = "bc00c1e4-30e4-443c-a559-a5b39ff42586"
 
+let DEV_TENANT_NAME: String = "tlvfpdev"
+let PREPROD_TENANT_NAME: String = "tlvfpb2cppr"
+
 var CLIENT_ID: String = PREPROD_CLIENT_ID
+var TENANT_NAME = PREPROD_TENANT_NAME
 
 struct CredentialsView: View {
     
@@ -57,11 +61,12 @@ struct CredentialsView: View {
                     HStack {
                         Menu {
                             Button {
-                                CLIENT_ID = DEV_CLIENTID
-                                clientId = DEV_CLIENTID
+                                CLIENT_ID = DEV_CLIENT_ID
+                                clientId = DEV_CLIENT_ID
+                                TENANT_NAME = DEV_TENANT_NAME
                             } label: {
                                 Text("Development")
-                                if clientId == DEV_CLIENTID {
+                                if clientId == DEV_CLIENT_ID {
                                     Image(systemName: "checkmark")
                                 }
                             }
@@ -69,6 +74,7 @@ struct CredentialsView: View {
                             Button {
                                 CLIENT_ID = PREPROD_CLIENT_ID
                                 clientId = PREPROD_CLIENT_ID
+                                TENANT_NAME = DEV_TENANT_NAME
                             } label: {
                                 Text("Pre-Production")
                                 if clientId == PREPROD_CLIENT_ID  {

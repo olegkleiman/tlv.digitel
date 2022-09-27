@@ -74,7 +74,7 @@ struct HomeView: View {
                             let deviceId = UIDevice.current.identifierForVendor!.uuidString
                             let parameters: [String: String] = [
                                 "clientId": CLIENT_ID,
-                                "scope": "openid offline_access https://TlvfpB2CPPR.onmicrosoft.com/\(CLIENT_ID)/TLV.Digitel.All",
+                                "scope": "openid offline_access https://\(TENANT_NAME).onmicrosoft.com/\(CLIENT_ID)/TLV.Digitel.All",
                                 "deviceId": deviceId,
                                 "ssoToken": ssoToken
                             ]

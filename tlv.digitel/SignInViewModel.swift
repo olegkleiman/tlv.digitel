@@ -24,7 +24,7 @@ class SignInViewModel: ObservableObject {
             "phoneNumber": credentials.phoneNumber,
             "otp": otp,
             "clientId": clientId,
-            "scope": "openid offline_access https://TlvfpB2CPPR.onmicrosoft.com/\(clientId)/TLV.Digitel.All",
+            "scope": "openid offline_access https://\(TENANT_NAME).onmicrosoft.com/\(clientId)/TLV.Digitel.All",
             "deviceId": deviceId
         ]
 
