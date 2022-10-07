@@ -17,7 +17,7 @@ class SignInViewModel: ObservableObject {
                otp: String,
                completion: @escaping (DecodableTokens?, Error?) throws -> Void) {
      
-        let url = URL(string: "https://tlvsso.azurewebsites.net/api/login")!
+        let url = URL(string: "https://api.tel-aviv.gov.il/sso/login")!
         
         let deviceId = UIDevice.current.identifierForVendor!.uuidString
         let parameters: [String: String] = [
@@ -58,7 +58,7 @@ class SignInViewModel: ObservableObject {
         showProgressView = true
         defer { showProgressView = false }
         
-        let url = URL(string:"https://tlvsso.azurewebsites.net/api/request_otp")!
+        let url = URL(string:"https://api.tel-aviv.gov.il/sso/request_otp")!
         
         let parameters: [String: String] = [
             "userId": credentials.userId,
@@ -72,7 +72,7 @@ class SignInViewModel: ObservableObject {
             switch (response.result ) {
                 case .success:
                 
-                    let _res = response.value!.isError
+                    let _res = response.value!.IsError
                     completion(!_res)
 
                 case .failure(let error):

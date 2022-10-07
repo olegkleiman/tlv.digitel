@@ -10,9 +10,9 @@ import SwiftUI
 import Alamofire
 
 struct SendOTPResponse: Codable {
-    let isError: Bool
-    let errorDesc: String
-    let errorId: Int
+    let IsError: Bool
+    let ErrorDesc: String
+    let ErrorId: Int
 }
 
 let DEV_CLIENT_ID: String = "fccb7f50-ba2c-4941-acc3-a2169aab5f50"
