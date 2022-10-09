@@ -15,6 +15,8 @@
 		DC24A96828A470D000D90CAE /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC24A96728A470D000D90CAE /* SignInViewModel.swift */; };
 		DC24A96A28A4726E00D90CAE /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC24A96928A4726E00D90CAE /* Authentication.swift */; };
 		DCCB4C312896E1EB001CC6F0 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = DCCB4C302896E1EB001CC6F0 /* SwiftKeychainWrapper */; };
+		DCCF910F28F1E24300F5D277 /* APIRequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCF910E28F1E24300F5D277 /* APIRequestInterceptor.swift */; };
+		DCCF911128F3351100F5D277 /* TokensUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCCF911028F3351100F5D277 /* TokensUtils.swift */; };
 		DCECF41E287B1FC300E6362C /* tlv_digitelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF41D287B1FC300E6362C /* tlv_digitelApp.swift */; };
 		DCECF420287B1FC300E6362C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCECF41F287B1FC300E6362C /* ContentView.swift */; };
 		DCECF422287B1FC400E6362C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCECF421287B1FC400E6362C /* Assets.xcassets */; };
@@ -33,6 +35,8 @@
 		DC24A96528A46FEC00D90CAE /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		DC24A96728A470D000D90CAE /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		DC24A96928A4726E00D90CAE /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		DCCF910E28F1E24300F5D277 /* APIRequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestInterceptor.swift; sourceTree = "<group>"; };
+		DCCF911028F3351100F5D277 /* TokensUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensUtils.swift; sourceTree = "<group>"; };
 		DCECF41A287B1FC300E6362C /* Tlv Digitel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Tlv Digitel.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCECF41D287B1FC300E6362C /* tlv_digitelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tlv_digitelApp.swift; sourceTree = "<group>"; };
 		DCECF41F287B1FC300E6362C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -97,7 +101,7 @@
 		DCECF41C287B1FC300E6362C /* tlv.digitel */ = {
 			isa = PBXGroup;
 			children = (
-				DC24A96428A46FC800D90CAE /* Models */,
+				DCCF911028F3351100F5D277 /* TokensUtils.swift */,
 				DC24A95E28A260A600D90CAE /* tlv.digitel.entitlements */,
 				DCECF42F287B247200E6362C /* Views */,
 				DCECF42B287B1FD700E6362C /* tlv-digitel-Info.plist */,
@@ -106,6 +110,8 @@
 				DCECF423287B1FC400E6362C /* Preview Content */,
 				DCECF432287B258100E6362C /* DeeplinkManager.swift */,
 				DC24A96928A4726E00D90CAE /* Authentication.swift */,
+				DCCF910E28F1E24300F5D277 /* APIRequestInterceptor.swift */,
+				DC24A96428A46FC800D90CAE /* Models */,
 			);
 			path = tlv.digitel;
 			sourceTree = "<group>";
@@ -212,6 +218,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCCF910F28F1E24300F5D277 /* APIRequestInterceptor.swift in Sources */,
+				DCCF911128F3351100F5D277 /* TokensUtils.swift in Sources */,
 				DC24A96028A4428800D90CAE /* OTPView.swift in Sources */,
 				DCECF42E287B23AA00E6362C /* CredentialsView.swift in Sources */,
 				DCECF431287B251300E6362C /* HomeView.swift in Sources */,

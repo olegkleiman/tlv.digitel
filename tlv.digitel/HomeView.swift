@@ -25,7 +25,46 @@ struct DecodableTokens: Codable {
     let refresh_token: String
     let id_token: String
     let sso_token: String?
+    
+    init(access_token: String,
+         token_type: String,
+         expires_in: String,
+         refresh_token: String,
+         id_token: String,
+         sso_token: String) {
+        self.access_token = access_token
+        self.token_type = token_type
+        self.expires_in = expires_in
+        self.refresh_token = refresh_token
+        self.id_token = id_token
+        self.sso_token = sso_token
+    }
+    
+    init(copyFrom: DecodableRefreshTokens) {
+        self.access_token = copyFrom.access_token!
+        self.token_type = copyFrom.token_type
+        self.expires_in = String(copyFrom.expires_in)
+        self.refresh_token = copyFrom.refresh_token
+        self.id_token = copyFrom.id_token
+        self.sso_token = ""
+    }
 }
+
+struct MagicLinkResponse: Codable {
+    let UTz: String
+    let Link: String
+    let IsError: Bool?
+    let ErrorMessage: String?
+}
+
+let DEV_CLIENT_ID: String = "fccb7f50-ba2c-4941-acc3-a2169aab5f50"
+let PREPROD_CLIENT_ID: String = "bc00c1e4-30e4-443c-a559-a5b39ff42586"
+
+let DEV_TENANT_NAME: String = "tlvfpdev"
+let PREPROD_TENANT_NAME: String = "tlvfpb2cppr"
+
+var CLIENT_ID: String = PREPROD_CLIENT_ID
+var TENANT_NAME = PREPROD_TENANT_NAME
 
 struct HomeView: View {
     
@@ -34,6 +73,12 @@ struct HomeView: View {
     @State var name: String = ""
     @State var oauthTokens: DecodableTokens?
     @State var isLoading: Bool = false
+    
+    @Environment(\.openURL) var openURL
+    
+    func refreshTokens() {
+        
+    }
     
     var body: some View {
         ZStack {
@@ -69,8 +114,8 @@ struct HomeView: View {
                                 return
                             }
                             
-                            // SSO token found. Convert it to OAuth2 tokens
-                            let url = "https://tlvsso.azurewebsites.net/api/sso_login?code=W0oWhTIOI-uRnkXlpAgy0fiAXqf9Fit7Oa9ADqoW2isEAzFu7jyt6Q=="
+                            // SSO token found. Exchange it for OAuth2 tokens
+                            let url = "https://api.tel-aviv.gov.il/sso/sso_login?code=W0oWhTIOI-uRnkXlpAgy0fiAXqf9Fit7Oa9ADqoW2isEAzFu7jyt6Q=="
                             let deviceId = UIDevice.current.identifierForVendor!.uuidString
                             let parameters: [String: String] = [
                                 "clientId": CLIENT_ID,
@@ -109,7 +154,7 @@ struct HomeView: View {
                                             keychain.accessGroup = appID
                                             var _ = keychain.set(jsonString!, forKey: "tlv_tokens")
                                         }
-                                        catch  let error {
+                                        catch let error {
                                             print("🥶 \(error)")
                                         }
                                         
@@ -149,6 +194,43 @@ struct HomeView: View {
                         
                         self.name = ""
                         self.authentication.state = .initial
+                    }
+                    .padding()
+                    
+                    Button("Launch Site") {
+                        let url = "https://tlvsso.azurewebsites.net/api/magic_link?clientId=\(CLIENT_ID)"
+                        
+                        guard let idToken: String = self.oauthTokens?.id_token
+                        else {
+                            return
+                        }
+                        let headers: HTTPHeaders = [
+                            .authorization(bearerToken: idToken)
+                        ]
+                        let interceptor: APIRequestInterceptor = APIRequestInterceptor.shared
+                        AF.request(url, method: .get, headers: headers,
+                                   interceptor: interceptor)
+                            // validate() produces an error that will trigger an automatic retry (via interceptor)
+                            .validate(statusCode: 200..<300)
+                            .validate(contentType: ["application/json"])
+//                                .responseJSON(completionHandler: { (response) in
+                            .responseDecodable(of: MagicLinkResponse.self) { response in
+
+                                switch response.result {
+                                    case .success(let magicLinkResponse): do {
+                                        guard magicLinkResponse.IsError != nil
+                                        else {
+                                            openURL(URL(string: magicLinkResponse.Link)!)
+                                            return
+                                        }
+                                        
+                                    }
+                                    case .failure(let error):
+                                        print("🥶 \(error)")
+                            }
+
+                        }
+
                     }
                     .padding()
                 }

@@ -15,14 +15,7 @@ struct SendOTPResponse: Codable {
     let ErrorId: Int
 }
 
-let DEV_CLIENT_ID: String = "fccb7f50-ba2c-4941-acc3-a2169aab5f50"
-let PREPROD_CLIENT_ID: String = "bc00c1e4-30e4-443c-a559-a5b39ff42586"
 
-let DEV_TENANT_NAME: String = "tlvfpdev"
-let PREPROD_TENANT_NAME: String = "tlvfpb2cppr"
-
-var CLIENT_ID: String = PREPROD_CLIENT_ID
-var TENANT_NAME = PREPROD_TENANT_NAME
 
 struct CredentialsView: View {
     
