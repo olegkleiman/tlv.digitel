@@ -198,7 +198,7 @@ struct HomeView: View {
                     .padding()
                     
                     Button("Launch Site") {
-                        let url = "https://tlvsso.azurewebsites.net/api/magic_link?clientId=\(CLIENT_ID)"
+                        let url = "https://api.tel-aviv.gov.il/sso/magic_link?clientId=\(CLIENT_ID)"
                         
                         guard let idToken: String = self.oauthTokens?.id_token
                         else {
