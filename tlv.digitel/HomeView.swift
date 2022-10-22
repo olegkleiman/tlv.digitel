@@ -13,7 +13,7 @@ import KeychainSwift
 struct StrictDecodableTokens: Codable {
     let access_token: String
     let token_type: String
-    let expires_in: String
+    let expires_in: Int
     let refresh_token: String
     let id_token: String
 }
@@ -21,14 +21,14 @@ struct StrictDecodableTokens: Codable {
 struct DecodableTokens: Codable {
     let access_token: String
     let token_type: String
-    let expires_in: String
+    let expires_in: Int
     let refresh_token: String
     let id_token: String
     let sso_token: String?
     
     init(access_token: String,
          token_type: String,
-         expires_in: String,
+         expires_in: Int,
          refresh_token: String,
          id_token: String,
          sso_token: String) {
@@ -43,7 +43,7 @@ struct DecodableTokens: Codable {
     init(copyFrom: DecodableRefreshTokens) {
         self.access_token = copyFrom.access_token!
         self.token_type = copyFrom.token_type
-        self.expires_in = String(copyFrom.expires_in)
+        self.expires_in = copyFrom.expires_in
         self.refresh_token = copyFrom.refresh_token
         self.id_token = copyFrom.id_token
         self.sso_token = ""
@@ -227,7 +227,7 @@ struct HomeView: View {
                                     }
                                     case .failure(let error):
                                         print("🥶 \(error)")
-                            }
+                                }
 
                         }
 
