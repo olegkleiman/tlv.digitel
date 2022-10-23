@@ -20,13 +20,22 @@ class SignInViewModel: ObservableObject {
         let url = URL(string: "https://api.tel-aviv.gov.il/sso/login")!
         
         let deviceId = UIDevice.current.identifierForVendor!.uuidString
-        let parameters: [String: String] = [
-            "phoneNumber": credentials.phoneNumber,
-            "otp": otp,
-            "clientId": clientId,
-            "scope": "openid offline_access https://\(TENANT_NAME).onmicrosoft.com/\(clientId)/TLV.Digitel.All",
-            "deviceId": deviceId
-        ]
+        struct LoginParameters : Encodable {
+                let phoneNumber: String
+                let otp: String
+                let clientId: String
+                let scope: String
+                let deviceId: String
+                let withUpgrade: Bool
+        }
+        let parameters = LoginParameters(
+            phoneNumber: credentials.phoneNumber,
+            otp: otp,
+            clientId: clientId,
+            scope: "openid offline_access https://\(TENANT_NAME).onmicrosoft.com/\(clientId)/TLV.Digitel.All",
+            deviceId: deviceId,
+            withUpgrade: false
+        )
 
         AF.request(url,
                    method: .post,
