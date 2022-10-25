@@ -82,6 +82,13 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		DCC1EB18290831E600DAFC0B /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ViewModels;
+			sourceTree = "<group>";
+		};
 		DCECF411287B1FC300E6362C = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +108,7 @@
 		DCECF41C287B1FC300E6362C /* tlv.digitel */ = {
 			isa = PBXGroup;
 			children = (
+				DCC1EB18290831E600DAFC0B /* ViewModels */,
 				DCCF911028F3351100F5D277 /* TokensUtils.swift */,
 				DC24A95E28A260A600D90CAE /* tlv.digitel.entitlements */,
 				DCECF42F287B247200E6362C /* Views */,

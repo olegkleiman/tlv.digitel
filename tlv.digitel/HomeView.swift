@@ -73,6 +73,8 @@ struct HomeView: View {
     @State var name: String = ""
     @State var oauthTokens: DecodableTokens?
     @State var isLoading: Bool = false
+    @State private var showAlert = false
+    @State private var alertMessage: String = ""
     
     @Environment(\.openURL) var openURL
     
@@ -98,13 +100,14 @@ struct HomeView: View {
                     }
                     .padding()
                     .onAppear() {
+                        
                         let keychain = KeychainSwift()
                         let appID = "GX7N6F8DFJ.gov.tel-aviv.digitel"
                         keychain.accessGroup = appID
-                        
+
                         guard let tokens = keychain.get("tlv_tokens")
                         else {
-                            
+
                             let keychainAccessGroupName = "GX7N6F8DFJ.gov.tlv.ssoKeychainGroup"
                             keychain.accessGroup = keychainAccessGroupName
                             guard let ssoToken = keychain.get("sso_token")
@@ -113,69 +116,75 @@ struct HomeView: View {
                                 self.authentication.state = .initial
                                 return
                             }
-                            
-                            // SSO token found. Exchange it for OAuth2 tokens
+
+                            //   SSO token found. Exchange it for OAuth2 tokens
                             let url = "https://api.tel-aviv.gov.il/sso/sso_login?code=W0oWhTIOI-uRnkXlpAgy0fiAXqf9Fit7Oa9ADqoW2isEAzFu7jyt6Q=="
                             let deviceId = UIDevice.current.identifierForVendor!.uuidString
-                            let parameters: [String: String] = [
-                                "clientId": CLIENT_ID,
-                                "scope": "openid offline_access https://\(TENANT_NAME).onmicrosoft.com/\(CLIENT_ID)/TLV.Digitel.All",
-                                "deviceId": deviceId,
-                                "ssoToken": ssoToken
-                            ]
+                            struct SSOLoginparams: Encodable
+                            {
+                                let clientId: String
+                                let scope: String
+                                let deviceId: String
+                                let ssoToken: String
+                            }
+                            let parameters = SSOLoginparams(clientId: CLIENT_ID,
+                                                            scope: "openid offline_access https://\(TENANT_NAME).onmicrosoft.com/digitel/all",
+                                                            deviceId: deviceId,
+                                                            ssoToken: ssoToken)
 
                             self.isLoading.toggle()
-                            
+
                             AF.request(url, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default)
                                 .validate(statusCode: 200..<500)
 //                                .responseJSON(completionHandler: { (response) in
                                 .responseDecodable(of: StrictDecodableTokens.self) { response in
-                                    
-                                    self.isLoading.toggle()
-                                    
-                                    switch response.result {
-                                        
-                                        case .success(let jsonTokens): do {
-                                            self.oauthTokens = DecodableTokens(access_token: jsonTokens.access_token,
-                                                                              token_type: jsonTokens.token_type,
-                                                                              expires_in: jsonTokens.expires_in,
-                                                                              refresh_token: jsonTokens.refresh_token,
-                                                                              id_token: jsonTokens.id_token,
-                                                                              sso_token: ssoToken)
-                                            
-                                            let jsonEncoder = JSONEncoder()
-                                            let jsonData = try jsonEncoder.encode(jsonTokens)
-                                            let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
 
-                                            let jwt = try? decode(jwt: self.oauthTokens!.id_token)
-                                            let claim = jwt?.claim(name: "name")
-                                            self.name = claim?.string ?? "unknown"
-                                            
-                                            keychain.accessGroup = appID
-                                            var _ = keychain.set(jsonString!, forKey: "tlv_tokens")
+                                    self.isLoading.toggle()
+
+                                    switch response.result {
+
+                                        case .success(let jsonTokens):
+                                           do {
+                                                self.oauthTokens = DecodableTokens(access_token: jsonTokens.access_token,
+                                                                                  token_type: jsonTokens.token_type,
+                                                                                  expires_in: jsonTokens.expires_in,
+                                                                                  refresh_token: jsonTokens.refresh_token,
+                                                                                  id_token: jsonTokens.id_token,
+                                                                                  sso_token: ssoToken)
+
+                                                let jsonEncoder = JSONEncoder()
+                                                let jsonData = try jsonEncoder.encode(jsonTokens)
+                                                let jsonString = String(data: jsonData, encoding: String.Encoding.utf8)
+
+                                                let jwt = try? decode(jwt: self.oauthTokens!.id_token)
+                                                let claim = jwt?.claim(name: "name")
+                                                self.name = claim?.string ?? "unknown"
+
+                                                keychain.accessGroup = appID
+                                                var _ = keychain.set(jsonString!, forKey: "tlv_tokens")
                                         }
                                         catch let error {
                                             print("🥶 \(error)")
                                         }
-                                        
+
                                         case .failure(let error):
                                             print("🥶 \(error)")
                                     }
                             }
-                            
+
                             return
                         }
-                        
+
                         // OAuth2 tokens found. Just use them
                         let _data = tokens.data(using: .utf8)!
                         do {
                             let jsonDecoder = JSONDecoder()
                             self.oauthTokens = try jsonDecoder.decode(DecodableTokens.self, from: _data)
-                            
+
                             let jwt = try? decode(jwt: self.oauthTokens!.id_token)
                             let claim = jwt?.claim(name: "name")
                             self.name = claim?.string ?? "unknown"
-                            
+
                         } catch let error {
                             print("Tokens deserialization error: \(error)")
                         }
@@ -233,6 +242,45 @@ struct HomeView: View {
 
                     }
                     .padding()
+                    
+                    Button("Call API (Bruegel)") {
+                        let url = "https://api.tel-aviv.gov.il/breugel/hunters"
+                        
+                        guard let accessToken: String = self.oauthTokens?.access_token
+                        else {
+                            return
+                        }
+                            
+                        let headers: HTTPHeaders = [
+                            .authorization(bearerToken: accessToken)
+                        ]
+                        
+                        AF.request(url,
+                                   method: .get,
+                                   headers: headers)
+                            .validate()
+                            .response { response in
+                                
+                                switch response.result {
+                                    case .success(let data):
+                                        let string = String(data: data!, encoding: .utf8)!
+                                        debugPrint(string)
+                                    
+                                        self.alertMessage = "Token was accepted"
+                                        self.showAlert.toggle()
+                                        
+                                    case .failure(let error):
+                                        debugPrint(error)
+                                        self.alertMessage = error.localizedDescription
+                                        self.showAlert.toggle()
+                                }
+                            }
+                    }
+                    .padding()
+                    .alert(isPresented: $showAlert) {
+                        Alert(title: Text("For Your Information"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+
+                    }
                 }
             }
 //            Spacer()

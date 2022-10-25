@@ -102,12 +102,18 @@ class APIRequestInterceptor: RequestInterceptor {
             let refresh_token = oauthTokens.refresh_token
             
             let url = "https://api.tel-aviv.gov.il/sso/refresh_token"
-            let parameters: [String: String] = [
-                "client_id": CLIENT_ID,
-                "scope": "openid offline_access https://tlvfpb2cppr.onmicrosoft.com/\(CLIENT_ID)/TLV.Digitel.All",
-                "refresh_token": refresh_token,
-                "isAnonyousLogin": "false"
-            ]
+            struct RefreshTokenParams : Encodable
+            {
+                let client_id: String
+                let scope: String
+                let refresh_token: String
+                let isAnonyousLogin: Bool
+            }
+            let parameters = RefreshTokenParams(client_id: CLIENT_ID,
+                                                scope: "openid offline_access https://tlvfpb2cppr.onmicrosoft.com/digitel/all",
+                                                refresh_token: refresh_token,
+                                                isAnonyousLogin: false)
+
             let headers: HTTPHeaders = [
                 .contentType("application/json")
             ]

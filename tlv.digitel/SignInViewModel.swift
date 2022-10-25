@@ -32,7 +32,7 @@ class SignInViewModel: ObservableObject {
             phoneNumber: credentials.phoneNumber,
             otp: otp,
             clientId: clientId,
-            scope: "openid offline_access https://\(TENANT_NAME).onmicrosoft.com/\(clientId)/TLV.Digitel.All",
+            scope: "openid offline_access https://\(TENANT_NAME).onmicrosoft.com/digitel/all",
             deviceId: deviceId,
             withUpgrade: false
         )
@@ -69,11 +69,16 @@ class SignInViewModel: ObservableObject {
         
         let url = URL(string:"https://api.tel-aviv.gov.il/sso/request_otp")!
         
-        let parameters: [String: String] = [
-            "userId": credentials.userId,
-            "phoneNumber": credentials.phoneNumber,
-            "clientId": credentials.clientId
-        ]
+        struct RequestOTPParams : Encodable
+        {
+            let userId: String
+            let phoneNumber: String
+            let clientId: String
+        }
+        
+        let parameters = RequestOTPParams(userId: credentials.userId,
+                                          phoneNumber: credentials.phoneNumber,
+                                          clientId: credentials.clientId)
         
         AF.request(url, method: .post, parameters: parameters, encoder: JSONParameterEncoder.default)
         .responseDecodable(of: SendOTPResponse.self) { response in
