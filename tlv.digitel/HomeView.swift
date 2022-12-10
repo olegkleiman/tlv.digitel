@@ -59,12 +59,14 @@ struct MagicLinkResponse: Codable {
 
 let DEV_CLIENT_ID: String = "fccb7f50-ba2c-4941-acc3-a2169aab5f50"
 let PREPROD_CLIENT_ID: String = "bc00c1e4-30e4-443c-a559-a5b39ff42586"
+let PROD_CLIENT_ID: String = "29e60c77-9a0b-4a80-9745-64ba51ff3aa2"
 
 let DEV_TENANT_NAME: String = "tlvfpdev"
 let PREPROD_TENANT_NAME: String = "tlvfpb2cppr"
+let PROD_TENANT_NAME: String = "b2ctam"
 
-var CLIENT_ID: String = PREPROD_CLIENT_ID
-var TENANT_NAME = PREPROD_TENANT_NAME
+var CLIENT_ID: String = PROD_CLIENT_ID
+var TENANT_NAME = PROD_TENANT_NAME
 
 struct HomeView: View {
     
@@ -271,8 +273,16 @@ struct HomeView: View {
                                         
                                     case .failure(let error):
                                         debugPrint(error)
-                                        self.alertMessage = error.localizedDescription
+                                        if let data = response.data {
+                                            let message = String(data: data, encoding: String.Encoding.utf8)
+                                            self.alertMessage = message!
+                                        }
+                                        else {
+                                            self.alertMessage = error.localizedDescription
+                                            return
+                                        }
                                         self.showAlert.toggle()
+
                                 }
                             }
                     }
@@ -292,8 +302,10 @@ struct HomeView: View {
 }
 
 struct HomeView_Previews: PreviewProvider {
-
+    
     static var previews: some View {
         HomeView()
+            .environmentObject(Authentication())
     }
 }
+

@@ -51,8 +51,8 @@ class SignInViewModel: ObservableObject {
                 
                 case .failure(let error):
                     if let data = response.data {
-                        let json = String(data: data, encoding: String.Encoding.utf8)
-                        print("Failure Response: \(String(describing: json))")
+                        let message = String(data: data, encoding: String.Encoding.utf8)
+                        print("Failure Response: \(String(describing: message))")
                     }
                     try! completion(nil, error)
                 

@@ -25,7 +25,7 @@ struct CredentialsView: View {
     
     //MARK: - PROPERTIES
     @State var isLoading: Bool = false
-    @State private var clientId: String = PREPROD_CLIENT_ID
+    @State private var clientId: String = PROD_CLIENT_ID
     @State var errorMessage: String = ""
     @State var showError: Bool = false
     @State var dataAvailable = false
@@ -53,6 +53,16 @@ struct CredentialsView: View {
                     
                     HStack {
                         Menu {
+                            Button {
+                                CLIENT_ID = PROD_CLIENT_ID
+                                clientId = PROD_CLIENT_ID
+                                TENANT_NAME = PROD_TENANT_NAME
+                            } label: {
+                                Text("Production")
+                                if clientId == PROD_CLIENT_ID {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
                             Button {
                                 CLIENT_ID = DEV_CLIENT_ID
                                 clientId = DEV_CLIENT_ID
